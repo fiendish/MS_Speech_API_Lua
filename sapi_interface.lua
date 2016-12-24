@@ -66,7 +66,7 @@ local replacements = { -- arbitrary text filtering heuristics
    {string.rep("[%-%+%^=#$~><%*`_:]", 2).."+", " "}, -- symbol garbage
    {"|", " "}, -- symbol garbage
    -- fix contextual pronunciation
-   {"plugin", "pluggin"},
+   {"[pP]lugin", "pluggin"}, -- plug, not pluge
    {"([%[%(%{])", " %1"}, -- "()()"
    {"([%]%}%)])", "%1 "}, -- "()()"
    {"(%d)%*(%d)", "%1 times %2"}, -- "*"
@@ -81,7 +81,7 @@ local replacements = { -- arbitrary text filtering heuristics
 }
 
 
-local function custom_filter(msg) -- uses arbitrary heuristics
+local function custom_filter (msg) -- uses arbitrary heuristics
    for i,sub in ipairs(replacements) do
       msg = msg:gsub(sub[1], sub[2])
    end
@@ -108,7 +108,7 @@ local function get_filtering_level ()
 end
 
 
-local function print_spoken()
+local function print_spoken ()
    print_spoken_lines = not print_spoken_lines
 end
 
@@ -142,7 +142,7 @@ local function say (what)
 end
 
 
-local function list_filtering_levels()
+local function list_filtering_levels ()
    say("Filtering level options are:")
    for i,v in ipairs(filter_descs) do
       say("Level "..tostring(i)..": "..v) 
@@ -189,14 +189,18 @@ local function speech_demo ()
 end
 
 
-local function set_filtering_level(level)
+local function set_filtering_level (level, quietly)
    level = tonumber(level)
    if (level == nil) or (level < 1) or (level > #filter_descs) then
-      say("SAPI filtering level must be a number between 1 and "..tostring(#filter_descs)..".")
-      list_filtering_levels()
+      if not quietly then
+         say("SAPI filtering level must be a number between 1 and "..tostring(#filter_descs)..".")
+         list_filtering_levels()
+      end
    else
       filtering_level = level
-      say_current_filtering_level()
+      if not quietly then
+         say_current_filtering_level()
+      end
    end
    return get_filtering_level()
 end
@@ -216,46 +220,58 @@ local function skip_all ()
 end
 
 
-local function unmute ()
+local function unmute (quietly)
    muted = false
-   say("SAPI speech on.")
+   if not quietly then
+      say("SAPI speech on.")
+   end
 end
 
 
-local function mute ()
-   say("SAPI speech off.")
+local function mute (quietly)
+   if not quietly then
+      say("SAPI speech off.")
+   end
    muted = true
    skip_all()
 end
 
 
-local function faster ()
+local function faster (quietly)
    engine.Rate = engine.Rate + 1
-   say_current_rate()
-   return get_rate()
-end
-
-
-local function slower ()
-   engine.Rate = engine.Rate - 1
-   say_current_rate()
-   return get_rate()
-end
-
-
-local function set_rate (rate)
-   local rate = tonumber(rate)
-   if rate then
-      engine.Rate = rate
+   if not quietly then
       say_current_rate()
-   else
-      say("SAPI speech rate must be a number.")
    end
    return get_rate()
 end
 
 
-local function set_voice_by_id (voice_id)
+local function slower (quietly)
+   engine.Rate = engine.Rate - 1
+   if not quietly then
+      say_current_rate()
+   end
+   return get_rate()
+end
+
+
+local function set_rate (rate, quietly)
+   local rate = tonumber(rate)
+   if rate then
+      engine.Rate = rate
+      if not quietly then
+         say_current_rate()
+      end
+   else
+      if not quietly then
+         say("SAPI speech rate must be a number.")
+      end
+   end
+   return get_rate()
+end
+
+
+local function set_voice_by_id (voice_id, quietly)
    local enumerate_voices = luacom.GetEnumerator(engine:GetVoices())
    local voice = enumerate_voices:Next()
    local i = 0
@@ -272,24 +288,32 @@ local function set_voice_by_id (voice_id)
    if found then
       current_voice_index = i
       engine:setVoice(voice)
-      say_current_voice()
+      if not quietly then
+         say_current_voice()
+      end
    else
-      say("Voice "..voice_id.." not found.")
-      list_voices()
+      if not quietly then
+         say("Voice "..voice_id.." not found.")
+         list_voices()
+      end
    end
    return current_voice_index, get_voice_id()
 end
 
 
-local function set_voice_by_number (voice_number)
+local function set_voice_by_number (voice_number, quietly)
    local voice_number = tonumber(voice_number)
    if (voice_number ~= nil) and (voice_number >= 1) and (voice_number <= NUM_SAPI_VOICES) and (engine:GetVoices():Item(voice_number-1).ID ~= "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\SampleTTSVoice") then
       current_voice_index = voice_number-1
       engine:setVoice(engine:GetVoices():Item(current_voice_index))
-      say_current_voice()
+      if not quietly then
+         say_current_voice()
+      end
    else
-      say(tostring(voice_number).." is not a valid SAPI voice number.")
-      list_voices()
+      if not quietly then
+         say(tostring(voice_number).." is not a valid SAPI voice number.")
+         list_voices()
+      end
    end
    return current_voice_index, get_voice_id()
 end
