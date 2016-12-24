@@ -34,6 +34,10 @@ You can download it from https://download.microsoft.com/download/B/4/3/B4314928-
 | speech_demo | | | Speaks a set of demonstration sentences. |
 | print_spoken | | | Print spoken lines to the screen to aid debugging. |
 
+| Variables | Description |
+| --- | --- |
+| replacements | Table of tables in the form {*string*&nbsp;pattern,&nbsp;*string*&nbsp;replacement} for filtering level 3 via string.gsub. |
+
 # Usage Example
 ```lua
 sapi_interface = require "sapi_interface"
@@ -54,6 +58,9 @@ if sapi_interface == -2 then
   print("No SAPI voices found.")
   return
 end
+
+-- add a new filter
+table.insert(sapi_interface.replacements, {"%f[%a][gG]clan", " G clan"})
 
 sapi_interface.say("SAPI interface is ready")
 sapi_interface.speech_demo()
