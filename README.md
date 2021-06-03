@@ -4,7 +4,7 @@ Easy text-to-speech in Lua with MS SAPI ( https://en.wikipedia.org/wiki/Microsof
 
 ## Dependencies
 
-LuaCOM ( https://github.com/davidm/luacom )
+LuaCOM ( https://github.com/davidm/luacom or maybe better https://github.com/moteus/luacom )
 
 ### Note for use on non-Microsoft systems with Wine
 
