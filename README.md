@@ -2,17 +2,22 @@
 
 Easy text-to-speech in Lua with MS SAPI ( https://en.wikipedia.org/wiki/Microsoft_Speech_API ).
 
-### Dependencies
+## Dependencies
+
 LuaCOM ( https://github.com/davidm/luacom )
 
 ### Note for use on non-Microsoft systems with Wine
-SAPI speech functionality depends on the Microsoft Speech API, which is not included by default in Wine, and SpeechSDK51.exe must be separately installed.
-You can download it from https://download.microsoft.com/download/B/4/3/B4314928-7B71-4336-9DE7-6FA4CF00B7B3/SpeechSDK51.exe
 
-# API
+SAPI speech functionality depends on the Microsoft Speech API, which is not included by default in Wine, and SpeechSDK51.exe must be separately installed.
+You can install it with `winetricks speechsdk` or download it from https://download.microsoft.com/download/B/4/3/B4314928-7B71-4336-9DE7-6FA4CF00B7B3/SpeechSDK51.exe
+
+## API
+
 | Function | Arguments | Returns | Description |
 | --- | --- | --- | --- |
 | say | *string*&nbsp;message | | Speak the given string. |
+| pause | | | Pause speaking. |
+| resume | | | Resume speaking. |
 | skip_sentence | | | Stop speaking the current line and move to the next line in the SAPI buffer. |
 | skip_all | | | Stop speaking and clear the SAPI buffer. |
 | set_voice_by_number | *int*&nbsp;SAPI_index, [*bool*&nbsp;quietly] | *int*&nbsp;SAPI_index, *string*&nbsp;SAPI_ID  | Choose the SAPI voice indexed from 1 to n |
@@ -38,7 +43,8 @@ You can download it from https://download.microsoft.com/download/B/4/3/B4314928-
 | --- | --- |
 | replacements | Table of tables in the form {*string*&nbsp;pattern,&nbsp;*string*&nbsp;replacement} for filtering level 3 via string.gsub. |
 
-# Usage Example
+## Usage Example
+
 ```lua
 sapi_interface = require "sapi_interface"
 
