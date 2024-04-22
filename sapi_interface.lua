@@ -108,6 +108,11 @@ local function get_filtering_level ()
 end
 
 
+local function get_volume()
+    return engine.Volume
+end
+
+
 local function print_spoken ()
    print_spoken_lines = not print_spoken_lines
 end
@@ -345,6 +350,7 @@ return {
    get_voice_id = get_voice_id,
    get_rate = get_rate,
    get_filtering_level = get_filtering_level,
+   get_volume = get_volume,
    say_current_voice = say_current_voice,
    say_current_rate = say_current_rate,
    say_current_filtering_level = say_current_filtering_level,

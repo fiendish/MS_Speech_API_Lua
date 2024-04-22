@@ -29,6 +29,7 @@ You can install it with `winetricks speechsdk` or download it from https://downl
 | get_voice_id | | *string*&nbsp;SAPI_ID | Return the SAPI voice ID string. |
 | get_rate | | *int*&nbsp;rate | Return the speech rate number. |
 | get_filtering_level | | *int*&nbsp;level | Return the filtering level number. |
+| get_volume | | *int*&nbsp;volume | Return the speech volume number. |
 | say_current_voice | | | Speaks the current voice index and ID. |
 | say_current_rate | | | Speaks the current speech rate. |
 | say_current_filtering_level | | | Speaks the current symbol filtering level and description. |
