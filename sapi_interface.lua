@@ -316,6 +316,20 @@ local function set_volume (volume, quietly)
 end
 
 
+local function louder (quietly)
+   local current_volume = get_volume()
+   local new_volume = math.min(current_volume + 5, 100)
+   return set_volume(new_volume, quietly)
+end
+
+
+local function quieter (quietly)
+   local current_volume = get_volume()
+   local new_volume = math.max(current_volume - 5, 0)
+   return set_volume(new_volume, quietly)
+end
+
+
 local function set_voice_by_id (voice_id, quietly)
    local enumerate_voices = luacom.GetEnumerator(engine:GetVoices())
    local voice = enumerate_voices:Next()
@@ -377,6 +391,8 @@ return {
    faster = faster,
    set_filtering_level = set_filtering_level,
    set_volume = set_volume,
+   quieter = quieter,
+   louder = louder,
    get_voice_id = get_voice_id,
    get_rate = get_rate,
    get_filtering_level = get_filtering_level,

@@ -27,6 +27,8 @@ You can install it with `winetricks speechsdk` or download it from https://downl
 | faster | [*bool*&nbsp;quietly] | *int*&nbsp;rate | Decrement the speech rate. |
 | set_filtering_level | *int*&nbsp;level, [*bool*&nbsp;quietly] | *int*&nbsp;level | Set the symbol filtering level, 1 being least and 3 being most filtering. |
 | set_volume | *int*&nbsp;volume, [*bool*&nbsp;quietly] | *int*&nbsp;volume | Set the speech volume. |
+| quieter | [*bool*&nbsp;quietly] | *int*&nbsp;volume | Decrement the speech volume. |
+| louder | [*bool*&nbsp;quietly] | *int*&nbsp;volume | Increment the speech volume. |
 | get_voice_id | | *string*&nbsp;SAPI_ID | Return the SAPI voice ID string. |
 | get_rate | | *int*&nbsp;rate | Return the speech rate number. |
 | get_filtering_level | | *int*&nbsp;level | Return the filtering level number. |
