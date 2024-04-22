@@ -197,6 +197,12 @@ local function say_current_filtering_level ()
 end
 
 
+local function say_current_volume ()
+   local volume = get_volume()
+   say("Speech volume is " .. volume .. ".")
+end
+
+
 local function speech_demo ()
    say("SAPI speech settings:")
    say_current_voice()
@@ -287,6 +293,29 @@ local function set_rate (rate, quietly)
 end
 
 
+local function set_volume (volume, quietly)
+   local current_volume = get_volume()
+   local volume = tonumber(volume)
+   if volume == nil then
+      if not quietly then
+         say("SAPI volume must be a number.")
+      end
+      return current_volume
+   end
+   if volume < 0 or volume > 100 then
+      if not quietly then
+         say("SAPI volume must be from 0 to 100.")
+      end
+      return current_volume
+   end
+   engine.Volume = volume
+   if not quietly then
+      say_current_volume()
+   end
+   return volume
+end
+
+
 local function set_voice_by_id (voice_id, quietly)
    local enumerate_voices = luacom.GetEnumerator(engine:GetVoices())
    local voice = enumerate_voices:Next()
@@ -347,6 +376,7 @@ return {
    slower = slower,
    faster = faster,
    set_filtering_level = set_filtering_level,
+   set_volume = set_volume,
    get_voice_id = get_voice_id,
    get_rate = get_rate,
    get_filtering_level = get_filtering_level,
@@ -354,6 +384,7 @@ return {
    say_current_voice = say_current_voice,
    say_current_rate = say_current_rate,
    say_current_filtering_level = say_current_filtering_level,
+   say_current_volume = say_current_volume,
    list_voices = list_voices,
    list_filtering_levels = list_filtering_levels,
    mute = mute,

@@ -26,6 +26,7 @@ You can install it with `winetricks speechsdk` or download it from https://downl
 | slower | [*bool*&nbsp;quietly] | *int*&nbsp;rate | Increment the speech rate. |
 | faster | [*bool*&nbsp;quietly] | *int*&nbsp;rate | Decrement the speech rate. |
 | set_filtering_level | *int*&nbsp;level, [*bool*&nbsp;quietly] | *int*&nbsp;level | Set the symbol filtering level, 1 being least and 3 being most filtering. |
+| set_volume | *int*&nbsp;volume, [*bool*&nbsp;quietly] | *int*&nbsp;volume | Set the speech volume. |
 | get_voice_id | | *string*&nbsp;SAPI_ID | Return the SAPI voice ID string. |
 | get_rate | | *int*&nbsp;rate | Return the speech rate number. |
 | get_filtering_level | | *int*&nbsp;level | Return the filtering level number. |
@@ -33,6 +34,7 @@ You can install it with `winetricks speechsdk` or download it from https://downl
 | say_current_voice | | | Speaks the current voice index and ID. |
 | say_current_rate | | | Speaks the current speech rate. |
 | say_current_filtering_level | | | Speaks the current symbol filtering level and description. |
+| say_current_volume | | | Speaks the current speech volume. |
 | list_voices | | | Speaks all of the available voices, index and ID. |
 | list_filtering_levels | | | Speaks all of the filtering levels, index and description. |
 | mute | [*bool*&nbsp;quietly] | | Disables speech. |
