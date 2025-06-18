@@ -28,11 +28,15 @@ require "luacom"
 -- Instantiate a SAPI voice obejct
 local engine = luacom.CreateObject("SAPI.SpVoice")
 
-if not engine then
+if not (engine and engine.GetVoices) then
    return -1
 end
 
 local NUM_SAPI_VOICES = engine:GetVoices().Count
+
+if NUM_SAPI_VOICES == nil then
+   return -1  -- Probably in Wine without SAPI support installed
+end
 
 if NUM_SAPI_VOICES == 0 then
    return -2
