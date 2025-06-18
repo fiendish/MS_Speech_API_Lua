@@ -1,8 +1,8 @@
 package = "MicrosoftSAPI"
-version = "1.2.0-1"
+version = "1.2.1-1"
 source = {
   url = "git://github.com/fiendish/ms_speech_api_lua",
-  tag = "v1.2.0"
+  tag = "v1.2.1"
 }
 description = {
   summary = "Lua COM interface for Microsoft Speech API",
